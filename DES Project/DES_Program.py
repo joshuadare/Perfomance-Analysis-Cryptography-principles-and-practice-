@@ -1,22 +1,22 @@
-import DES
-import Random
-import Counter
+from Crypto.Cipher import DES
+from Crypto import Random
+from Crypto.Util import Counter
 from timeit import default_timer as timer
 
 print('')
-#Keys fixed at 8 bytes = 64 bits
-#Electronic Codebook Mode
+#Using 8 bytes keys
+#Electronic Codebook Mode (ECB)
 print('Electronic Codebook Mode')
 start = timer()
 key = 'Eight ky'
 iv =  Random.new().read(DES.block_size)
-cipher = DES.new(key, DES.MODE_ECB , iv)
-plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb'
+cipher = DES.new(key, DES.MODE_ECB)
+plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccccdddddddddddddddd'
 msg = cipher.encrypt(plaintext)
 print('Ciphertext:')
 print(msg)
 
-cipher1 = DES.new(key, DES.MODE_ECB, iv)
+cipher1 = DES.new(key, DES.MODE_ECB)
 decryptedtext = cipher1.decrypt(msg)
 print('Plaintext:')
 print(decryptedtext)
@@ -24,17 +24,16 @@ end = timer()
 print('Elapsed time:')
 print(end - start)
 print('')
-print('---------------------------------------------')
-print('---------------------------------------------')
+print('-------------------------------------------------------')
 
-#Cipher-Block Chaining Mode
+#CipherBlock Chain Mode (CBC)
 print('')
-print('Cipher-Block Chaining Mode')
+print('Cipher-Block Chain Mode')
 start1 = timer()
 key = 'Eight ky'
 iv1 =  Random.new().read(DES.block_size)
 cipher2 = DES.new(key, DES.MODE_CBC , iv1)
-plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb'
+plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccccdddddddddddddddd'
 msg2 = cipher2.encrypt(plaintext)
 print('Ciphertext:')
 print(msg2)
@@ -47,8 +46,7 @@ end1 = timer()
 print('Elapsed time:')
 print(end1 - start1)
 print('')
-print('---------------------------------------------')
-print('---------------------------------------------')
+print('-------------------------------------------------------')
 
 
 #Cipher-Feedback Mode
@@ -58,7 +56,7 @@ start2 = timer()
 key = 'Eight ky'
 iv2 =  Random.new().read(DES.block_size)
 cipher4 = DES.new(key, DES.MODE_CFB , iv2)
-plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb'
+plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccccdddddddddddddddd'
 msg3 = cipher4.encrypt(plaintext)
 print('Ciphertext:')
 print(msg3)
@@ -71,17 +69,16 @@ end2 = timer()
 print('Elapsed time:')
 print(end2 - start2)
 print('')
-print('---------------------------------------------')
-print('---------------------------------------------')
+print('-------------------------------------------------------')
 
-#Output-Feedback Mode
+#Output-Feedback Mode (OFB)
 print('')
 print('Output-Feedback Mode')
 start3 = timer()
 key = 'Eight ky'
 iv3 =  Random.new().read(DES.block_size)
 cipher6 = DES.new(key, DES.MODE_OFB , iv3)
-plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb'
+plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccccdddddddddddddddd'
 msg4 = cipher6.encrypt(plaintext)
 print('Ciphertext:')
 print(msg4)
@@ -94,24 +91,23 @@ end3 = timer()
 print('Elapsed time:')
 print(end3 - start3)
 print('')
-print('---------------------------------------------')
-print('---------------------------------------------')
+print('-------------------------------------------------------')
 
-#Counter Mode
+#Counter Mode (ctr)
 print('')
 print('Counter Mode')
 start4 = timer()
 key = 'Eight ky'
 ctr = Counter.new(64)
 cipher8 = DES.new(key, DES.MODE_CTR , counter = ctr)
-pt = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb'
-ct = cipher8.encrypt(pt)
+plaintext = 'aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccccdddddddddddddddd'
+ciphertxt = cipher8.encrypt(plaintext)
 print('Ciphertext:')
-print(ct)
+print(ciphertxt)
 
 ctr1 = Counter.new(64)
 cipher9 = DES.new(key, DES.MODE_CTR, counter = ctr1)
-decryptedtext4 = cipher9.decrypt(ct)
+decryptedtext4 = cipher9.decrypt(ciphertxt)
 print('Plaintext:')
 print(decryptedtext4)
 end4 = timer()
